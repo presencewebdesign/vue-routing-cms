@@ -140,10 +140,11 @@
         <div class="page-form">
           <h2>Add New Page</h2>
           <PageForm
-            v-model="newPage"
+            :modelValue="newPage"
             :submitting="pagesSubmitting"
             submit-text="Add Page"
             @submit="addPage"
+            @update:modelValue="(value) => Object.assign(newPage, value)"
           />
         </div>
 
@@ -213,12 +214,13 @@
               <button @click="cancelEdit" class="modal-close">&times;</button>
             </div>
             <PageForm
-              v-model="editingPage"
+              :modelValue="editingPage"
               :submitting="updatingPage"
               submit-text="Update Page"
               :show-cancel="true"
               @submit="updatePage"
               @cancel="cancelEdit"
+              @update:modelValue="(value) => Object.assign(editingPage, value)"
             />
           </div>
         </div>
@@ -369,8 +371,6 @@ export default {
           updatedAt: serverTimestamp(),
         };
 
-        console.log("Adding route:", routeData); // Debug log
-
         await addDoc(collection(db, "routes"), routeData);
 
         // Reset form
@@ -449,8 +449,6 @@ export default {
           createdAt: serverTimestamp(),
           updatedAt: serverTimestamp(),
         };
-
-        console.log("Adding page:", pageData); // Debug log
 
         await addDoc(collection(db, "pages"), pageData);
 

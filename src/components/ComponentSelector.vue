@@ -13,12 +13,8 @@
       <option value="Contact">Contact (Dynamic)</option>
       <option value="Products">Products (Dynamic)</option>
       <option value="Services">Services (Dynamic)</option>
-      <option value="Admin">Admin</option>
-      <option value="DynamicPage">Dynamic Page (CMS)</option>
     </select>
-    <small class="form-help"
-      >Choose "Dynamic Page" for CMS-controlled content</small
-    >
+    <small class="form-help">Choose a component to render for this page</small>
   </div>
 </template>
 

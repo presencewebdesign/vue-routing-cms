@@ -19,6 +19,8 @@ This project showcases a modern approach to CMS-driven routing where:
 
 **Try it out**: [https://routing-cms.web.app](https://routing-cms.web.app)
 
+> **💡 Want your own demo?** Run `./deploy.sh` to deploy your own version!
+
 ### **What You Can Demo:**
 
 #### **Dynamic Routing**
@@ -114,8 +116,9 @@ routing-cms/
 
 ### 4. **Admin Dashboard**
 
+- **Page Management Tab**: Create and manage pages with modal editing (default tab)
 - **Route Management Tab**: Create and manage redirect rules
-- **Page Management Tab**: Create and manage pages with modal editing
+- **Reset Functionality**: "🔄 Reset to Defaults" button to restore demo state
 - **Real-time Updates**: All changes are reflected immediately
 - **User-friendly Interface**: Clean, responsive design with proper validation
 
@@ -140,7 +143,22 @@ cd routing-cms
 npm install
 ```
 
-### 2. **Firebase Setup**
+### 2. **Deploy to Live Demo (Optional)**
+
+Want to deploy your own version? Use the one-command deployment:
+
+```bash
+./deploy.sh
+```
+
+This will:
+
+- Install Firebase CLI if needed
+- Build the application
+- Deploy to Firebase Hosting
+- Give you a live URL like `https://your-project-id.web.app`
+
+### 3. **Firebase Setup**
 
 1. Create a new Firebase project at [Firebase Console](https://console.firebase.google.com/)
 2. Enable Firestore Database
@@ -157,7 +175,7 @@ npm install
    ```
 4. Enable Anonymous Authentication (optional, for demo)
 
-### 3. **Configure Firebase**
+### 4. **Configure Firebase**
 
 1. Copy the environment example file:
 
@@ -177,7 +195,7 @@ npm install
 
 **⚠️ Security Note**: The `.env` file is automatically ignored by Git to keep your Firebase credentials secure.
 
-### 4. **Set Up Firestore Collections**
+### 5. **Set Up Firestore Collections**
 
 > **💡 Quick Reference**: See `FIRESTORE_SETUP.md` for a complete checklist and troubleshooting guide.
 
@@ -292,7 +310,7 @@ After creating the collections and documents:
 2. You can test redirects by creating route rules in the Admin interface
 3. You can edit pages through the Admin → Page Management tab
 
-### 5. **Run the Application**
+### 6. **Run the Application**
 
 ```bash
 npm run dev
@@ -318,19 +336,20 @@ Visit `http://localhost:3000` to see the application.
 
 ## 🧪 Testing the System
 
-### **Testing Dynamic Routing**
-
-1. Go to Admin → Route Management
-2. Add a route rule (e.g., oldPath: `/about`, newPath: `/services`)
-3. Navigate to the old path in another tab
-4. Activate the rule and watch the automatic redirect!
-
 ### **Testing Page Management**
 
-1. Go to Admin → Page Management
+1. Go to Admin (Page Management tab is now the default)
 2. Create a new page with title, path, and component
 3. Set navigation order and visibility
 4. See the page appear in navigation automatically
+5. Use the "🔄 Reset to Defaults" button to restore original setup
+
+### **Testing Dynamic Routing**
+
+1. Go to Admin → Route Management tab
+2. Add a route rule (e.g., oldPath: `/about`, newPath: `/services`)
+3. Navigate to the old path in another tab
+4. Activate the rule and watch the automatic redirect!
 
 ### **Testing Real-time Updates**
 

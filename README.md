@@ -35,6 +35,7 @@ This project showcases a modern approach to CMS-driven routing where:
 - Edit existing pages through the modal interface
 - Control navigation visibility and order
 - See changes reflected immediately in the header
+- Use the "🔄 Reset to Defaults" button to restore original demo setup
 
 #### **Real-time Updates**
 

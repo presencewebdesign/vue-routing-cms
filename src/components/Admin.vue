@@ -6,19 +6,33 @@
       reflected immediately across all connected clients.
     </p>
 
+    <!-- Reset Button -->
+    <div class="reset-section">
+      <button
+        @click="resetToDefaults"
+        class="btn btn-warning"
+        :disabled="resetting"
+      >
+        {{ resetting ? "Resetting..." : "🔄 Reset to Defaults" }}
+      </button>
+      <small class="reset-info"
+        >This will restore default pages and clear all test data</small
+      >
+    </div>
+
     <!-- Tab Navigation -->
     <div class="tab-navigation">
-      <button
-        @click="activeTab = 'routes'"
-        :class="['tab-button', { active: activeTab === 'routes' }]"
-      >
-        Route Management
-      </button>
       <button
         @click="activeTab = 'pages'"
         :class="['tab-button', { active: activeTab === 'pages' }]"
       >
         Page Management
+      </button>
+      <button
+        @click="activeTab = 'routes'"
+        :class="['tab-button', { active: activeTab === 'routes' }]"
+      >
+        Route Management
       </button>
     </div>
 
@@ -236,6 +250,7 @@ import {
   query,
   orderBy,
   serverTimestamp,
+  getDocs,
 } from "firebase/firestore";
 import ComponentSelector from "./ComponentSelector.vue";
 import PageSettings from "./PageSettings.vue";
@@ -252,7 +267,7 @@ export default {
   },
   setup() {
     const db = inject("db");
-    const activeTab = ref("routes");
+    const activeTab = ref("pages");
 
     // Route management
     const routes = ref([]);
@@ -283,6 +298,7 @@ export default {
 
     const editingPage = ref(null);
     const updatingPage = ref(false);
+    const resetting = ref(false);
 
     onMounted(() => {
       if (db) {
@@ -536,6 +552,94 @@ export default {
       editingPage.value = null;
     };
 
+    const resetToDefaults = async () => {
+      if (!db) return;
+
+      if (
+        !confirm(
+          "Are you sure you want to reset to defaults? This will delete all current pages and routes and restore the original demo setup."
+        )
+      ) {
+        return;
+      }
+
+      resetting.value = true;
+      try {
+        // Delete all existing routes
+        const routesRef = collection(db, "routes");
+        const routesSnapshot = await getDocs(routesRef);
+        const routeDeletions = routesSnapshot.docs.map((doc) =>
+          deleteDoc(doc.ref)
+        );
+        await Promise.all(routeDeletions);
+
+        // Delete all existing pages
+        const pagesRef = collection(db, "pages");
+        const pagesSnapshot = await getDocs(pagesRef);
+        const pageDeletions = pagesSnapshot.docs.map((doc) =>
+          deleteDoc(doc.ref)
+        );
+        await Promise.all(pageDeletions);
+
+        // Add default pages
+        const defaultPages = [
+          {
+            title: "About Us",
+            path: "/about",
+            component: "About",
+            order: 1,
+            visible: true,
+            active: true,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          },
+          {
+            title: "Contact",
+            path: "/contact",
+            component: "Contact",
+            order: 2,
+            visible: true,
+            active: true,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          },
+          {
+            title: "Products",
+            path: "/products",
+            component: "Products",
+            order: 3,
+            visible: true,
+            active: true,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          },
+          {
+            title: "Services",
+            path: "/services",
+            component: "Services",
+            order: 4,
+            visible: true,
+            active: true,
+            createdAt: serverTimestamp(),
+            updatedAt: serverTimestamp(),
+          },
+        ];
+
+        // Add default pages to Firestore
+        const pageAdditions = defaultPages.map((page) =>
+          addDoc(collection(db, "pages"), page)
+        );
+        await Promise.all(pageAdditions);
+
+        alert("Reset successful! Default pages have been restored.");
+      } catch (error) {
+        console.error("Error resetting to defaults:", error);
+        alert("Error resetting to defaults. Please try again.");
+      } finally {
+        resetting.value = false;
+      }
+    };
+
     return {
       activeTab,
       routes,
@@ -559,12 +663,51 @@ export default {
       editPage,
       updatePage,
       cancelEdit,
+      resetToDefaults,
+      resetting,
     };
   },
 };
 </script>
 
 <style scoped>
+/* Reset Section */
+.reset-section {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.reset-section .btn-warning {
+  background: #f39c12;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reset-section .btn-warning:hover {
+  background: #e67e22;
+}
+
+.reset-section .btn-warning:disabled {
+  background: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.reset-info {
+  display: block;
+  margin-top: 0.5rem;
+  color: #856404;
+  font-size: 0.9rem;
+}
+
 /* Tab Navigation */
 .tab-navigation {
   display: flex;

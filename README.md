@@ -1,5 +1,9 @@
 # Routing CMS - Vue.js + Firebase
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-🌐%20Try%20It%20Now-blue?style=for-the-badge&logo=firebase)](https://routing-cms.web.app)
+
+> **🌐 Live Demo**: [https://routing-cms.web.app](https://routing-cms.web.app)
+
 A dynamic CMS-controlled routing system built with Vue.js 3 and Firebase Firestore. This application demonstrates how to create a content management system that can control routing, page content, and navigation in real-time.
 
 ## 🎯 Overview
@@ -10,6 +14,41 @@ This project showcases a modern approach to CMS-driven routing where:
 - **Pages are created and managed through the CMS** - Dynamic page creation and content management
 - **Real-time updates** - Changes in the database are reflected immediately across all clients
 - **Component-based architecture** - Reusable components for easy maintenance
+
+## 🚀 Live Demo
+
+**Try it out**: [https://routing-cms.web.app](https://routing-cms.web.app)
+
+### **What You Can Demo:**
+
+#### **Dynamic Routing**
+
+- Navigate to different pages (About, Contact, Products, Services)
+- Go to Admin → Route Management
+- Create a redirect rule (e.g., `/about` → `/services`)
+- Watch real-time redirects happen instantly!
+
+#### **Page Management**
+
+- Go to Admin → Page Management
+- Create new pages with custom components
+- Edit existing pages through the modal interface
+- Control navigation visibility and order
+- See changes reflected immediately in the header
+
+#### **Real-time Updates**
+
+- Open the demo in multiple browser tabs
+- Make changes in the Admin interface
+- Watch updates appear instantly across all tabs
+- No page refreshes needed!
+
+#### **Component System**
+
+- Dynamic component rendering based on CMS data
+- Reusable component architecture
+- Consistent styling and behavior
+- Easy to extend with new components
 
 ## 🏗️ Project Structure
 
@@ -35,8 +74,12 @@ routing-cms/
 │   ├── App.vue                        # Main application component
 │   └── main.js                        # Application entry point
 ├── .env.example                       # Environment variables template
+├── .firebaserc                        # Firebase project configuration
 ├── .gitignore                         # Git ignore rules
+├── DEPLOYMENT.md                      # Deployment guide
+├── deploy.sh                          # One-command deployment script
 ├── env.example                        # Environment variables template
+├── firebase.json                      # Firebase hosting configuration
 ├── FIRESTORE_SETUP.md                 # Firestore setup quick reference
 ├── index.html                         # HTML template
 ├── package.json                       # Dependencies and scripts
@@ -375,6 +418,38 @@ Visit `http://localhost:3000` to see the application.
 
 This project is open source and available under the [MIT License](LICENSE).
 
+## 🚀 Deployment
+
+### **Quick Deploy to Firebase Hosting**
+
+Deploy your application to get a live demo URL:
+
+**Option 1: One-Command Deploy (Recommended)**
+
+```bash
+./deploy.sh
+```
+
+**Option 2: Manual Deploy**
+
+```bash
+# Install Firebase CLI
+npm install -g firebase-tools
+
+# Login to Firebase
+npm run firebase:login
+
+# Initialize Firebase Hosting
+npm run firebase:init
+
+# Deploy to Firebase
+npm run deploy
+```
+
+**Your app will be live at**: `https://routing-cms.web.app` _(already deployed!)_
+
+> **📖 Detailed Guide**: See `DEPLOYMENT.md` for complete deployment instructions, troubleshooting, and advanced configuration.
+
 ## 🔒 Security
 
 ### **Environment Variables**
@@ -415,4 +490,5 @@ For questions or issues:
 ---
 
 **Happy coding! 🚀**
+
 # vue-routing-cms

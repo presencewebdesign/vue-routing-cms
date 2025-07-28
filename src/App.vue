@@ -82,9 +82,6 @@ export default {
         snapshot.forEach((doc) => {
           const routeData = doc.data();
           if (routeData.oldPath === currentPath && routeData.newPath) {
-            console.log(
-              `Route redirected from ${routeData.oldPath} to ${routeData.newPath}`
-            );
             router.push(routeData.newPath);
           }
         });

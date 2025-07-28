@@ -125,52 +125,31 @@ export default {
       Admin: Admin,
     });
 
-    console.log("Component map initialized:", Object.keys(componentMap.value));
-    console.log(
-      "Component map values:",
-      Object.values(componentMap.value).map((c) => c?.name || "undefined")
-    );
-
     // Get the selected component based on page data
     const selectedComponent = computed(() => {
       if (!pageData.value) {
-        console.log("No page data available");
         return null;
       }
 
       const componentName = pageData.value.component;
       const component = componentMap.value[componentName];
 
-      console.log("Page component:", componentName);
-      console.log("Available components:", Object.keys(componentMap.value));
-      console.log("Selected component:", component);
-
       return component || null;
     });
 
     onMounted(async () => {
-      console.log("DynamicPage mounted for path:", currentPath.value);
-
       // Set a timeout to prevent infinite loading
       const timeout = setTimeout(() => {
-        console.log("Loading timeout reached");
         loading.value = false;
       }, 3000); // 3 second timeout
 
       if (db) {
         try {
-          console.log("Checking for page at path:", currentPath.value);
-
           const pagesRef = collection(db, "pages");
-          console.log("Pages collection reference created");
 
           // First, let's get all pages to see what's available
           const allPagesQuery = query(pagesRef);
           const allPagesSnapshot = await getDocs(allPagesQuery);
-          console.log(
-            "All pages in database:",
-            allPagesSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-          );
 
           const pagesQuery = query(
             pagesRef,
@@ -178,9 +157,7 @@ export default {
             where("active", "==", true)
           );
 
-          console.log("Executing Firebase query for path:", currentPath.value);
           const snapshot = await getDocs(pagesQuery);
-          console.log("Found pages for this path:", snapshot.docs.length);
 
           if (!snapshot.empty) {
             const doc = snapshot.docs[0];
@@ -188,19 +165,13 @@ export default {
               id: doc.id,
               ...doc.data(),
             };
-            console.log("Page data loaded:", pageData.value);
           } else {
-            console.log("No page found for path:", currentPath.value);
             // Let's check if there are any pages with this path but inactive
             const inactiveQuery = query(
               pagesRef,
               where("path", "==", currentPath.value)
             );
             const inactiveSnapshot = await getDocs(inactiveQuery);
-            console.log(
-              "Inactive pages with this path:",
-              inactiveSnapshot.docs.length
-            );
           }
         } catch (error) {
           console.error("Error loading page:", error);
@@ -208,10 +179,8 @@ export default {
         } finally {
           clearTimeout(timeout);
           loading.value = false;
-          console.log("Loading completed");
         }
       } else {
-        console.log("Firebase not available");
         clearTimeout(timeout);
         loading.value = false;
       }
@@ -219,14 +188,11 @@ export default {
 
     // Also watch for route changes to reload page data
     watch(currentPath, async (newPath) => {
-      console.log("Route changed to:", newPath);
       loading.value = true;
       pageData.value = null;
 
       if (db) {
         try {
-          console.log("Checking for page at path:", newPath);
-
           const pagesRef = collection(db, "pages");
           const pagesQuery = query(
             pagesRef,
@@ -234,9 +200,7 @@ export default {
             where("active", "==", true)
           );
 
-          console.log("Executing Firebase query for path:", newPath);
           const snapshot = await getDocs(pagesQuery);
-          console.log("Found pages for this path:", snapshot.docs.length);
 
           if (!snapshot.empty) {
             const doc = snapshot.docs[0];
@@ -244,16 +208,12 @@ export default {
               id: doc.id,
               ...doc.data(),
             };
-            console.log("Page data loaded:", pageData.value);
-          } else {
-            console.log("No page found for path:", newPath);
           }
         } catch (error) {
           console.error("Error loading page:", error);
           console.error("Error details:", error.message);
         } finally {
           loading.value = false;
-          console.log("Loading completed");
         }
       } else {
         loading.value = false;

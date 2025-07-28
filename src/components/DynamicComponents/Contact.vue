@@ -77,7 +77,6 @@ export default {
 
     const submitForm = () => {
       // In a real application, this would send the form data to your backend
-      console.log("Form submitted:", form);
       alert(
         "Thank you for your message! This is a demo - in a real app, this would be sent to your backend."
       );

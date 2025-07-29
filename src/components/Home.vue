@@ -41,14 +41,22 @@
           Set up your Firebase project and update the configuration in
           <code>src/main.js</code>
         </li>
-        <li>Create a collection called "routes" in Firestore</li>
         <li>
-          Add documents with fields: <code>oldPath</code>, <code>newPath</code>,
-          <code>active</code> (boolean)
+          Create two collections in Firestore: <code>routes</code> and
+          <code>pages</code>
         </li>
         <li>
-          Navigate to a page and update the routing in Firestore to see
-          real-time redirects
+          Add sample pages to the <code>pages</code> collection with fields:
+          <code>title</code>, <code>path</code>, <code>component</code>,
+          <code>order</code>, <code>visible</code>, <code>active</code>
+        </li>
+        <li>
+          Add redirect rules to the <code>routes</code> collection with fields:
+          <code>oldPath</code>, <code>newPath</code>, <code>active</code>
+        </li>
+        <li>Use the Admin interface to manage pages and routes in real-time</li>
+        <li>
+          Test redirects by navigating to a page and updating routing rules
         </li>
       </ol>
     </div>

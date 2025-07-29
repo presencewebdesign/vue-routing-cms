@@ -35,7 +35,7 @@
     <footer class="footer">
       <div class="container">
         <p>
-          &copy; 2024 Routing CMS Demo. Routes controlled by Firebase Firestore.
+          &copy; 2025 Routing CMS Demo. Routes controlled by Firebase Firestore.
         </p>
       </div>
     </footer>
